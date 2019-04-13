@@ -10,21 +10,24 @@ class GsmModule():
     self.baud = baud
     self.serial = serial.Serial(self.port, self.baud)
     self.serial.close()
+    print "GSM object created", port_name, port_baudrate
 
   def openSerial(self):
     self.serial.open()
+    print "Serial open"
 
   def closeSerial(self):
     self.serial.close()
+    print "Serial closed"
 
   def sendCommand(self, cmd):
     self.openSerial()
     self.serial.write(cmd + '\r')
+    print "Cmd sent", cmd
 
-    rcv = ''
-
-    while(self.serial.read() != ''):
-      rcv += self.serial.read()
+    rcv = self.serial.read()
+    while(rcv != ''):
+      rcv = self.serial.read()
 
     self.closeSerial()
     print rcv
