@@ -11,6 +11,22 @@ RESPONSE_LEN = 128
 
 g = serial.Serial(port_name, port_baudrate, timeout=2)
 g.write('AT+CGATT=1')
+print g.read(RESPONSE_LEN)
+
+g.write('AT+CIPMUX=0')
+print g.read(RESPONSE_LEN)
+
+g.write('AT+CSTT="omnitel","omni","omni"')
+print g.read(RESPONSE_LEN)
+
+g.write('AT+CIICR')
+print g.read(RESPONSE_LEN)
+
+g.write('AT+CIFSR')
+print g.read(RESPONSE_LEN)
+
+g.write('AT+CIPSHUT')
+print g.read(RESPONSE_LEN)
 
 g.write('AT+HTTPINIT')
 print g.read(RESPONSE_LEN)
@@ -18,7 +34,7 @@ print g.read(RESPONSE_LEN)
 g.write('AT+HTTPPARA="CID",1')
 print g.read(RESPONSE_LEN)
 
-g.write('AT+HTTPPARA="URL","http://vilniustransport.com"')
+g.write('AT+HTTPPARA="URL","78.61.220.12"')
 print g.read(RESPONSE_LEN)
 
 g.write('AT+HTTPPARA="CONTENT","application/json"')
