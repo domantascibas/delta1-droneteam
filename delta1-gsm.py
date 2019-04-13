@@ -21,32 +21,44 @@ class GsmModule():
     print "Serial closed"
 
   def sendCommand(self, cmd):
-    self.openSerial()
+    # self.openSerial()
     self.serial.write(cmd + '\r')
     print "Cmd sent", cmd
 
-    rcv = self.serial.readline()
-    rcv = self.serial.readline()
-    print rcv
+    # rcv = self.serial.readline()
+    # rcv = self.serial.readline()
+    # print rcv
 
+    # self.closeSerial()
+
+  # def sendData(self, cmd, data):
+  #   self.openSerial()
+  #   self.serial.write(cmd + '\r')
+  #   print "Cmd sent", cmd
+
+  #   self.serial.write(data + '\r')
+  #   rcv = self.serial.readline()
+  #   print rcv
+  #   rcv = self.serial.readline()
+  #   print rcv
+
+  def sendSms(self, number, message, callback):
+    self.openSerial()
+    self.sendCommand("AT+CMGF=1")
+    rcv = self.serial.readline()
+    self.checkResponse()
+    # rcv = self.serial.readline()
     self.closeSerial()
 
-  def sendData(self, cmd, data):
-    self.openSerial()
-    self.serial.write(cmd + '\r')
-    print "Cmd sent", cmd
-
-    self.serial.write(data + '\r')
-    rcv = self.serial.readline()
-    print rcv
+  def checkResponse(self):
     rcv = self.serial.readline()
     print rcv
 
 Gsm = GsmModule(port_name, port_baudrate)
-Gsm.sendCommand("AT")
-Gsm.sendCommand("AT+CMGF=1")
-Gsm.sendData('AT+CMGS="869596153"', "Msg test")
-Gsm.sendCommand("0x1A")
+# Gsm.sendCommand("AT")
+# Gsm.sendCommand("AT+CMGF=1")
+Gsm.sendData('AT+CMGS="869596153"', "Msg test", GsmModule.checkReponse)
+# Gsm.sendCommand("0x1A")
 exit()
 
 # ser = serial.Serial('/dev/ttyAMA0', 115200)
