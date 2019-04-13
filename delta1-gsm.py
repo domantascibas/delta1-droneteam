@@ -42,10 +42,10 @@ class GsmModule():
   #   rcv = self.serial.readline()
   #   print rcv
 
-  def sendSms(self, number, message, callback):
+  def sendSms(self, number, messsage, callback):
     self.openSerial()
     self.sendCommand("AT+CMGF=1")
-    rcv = self.serial.readline()
+    #rcv = self.serial.readline()
     self.checkResponse()
     # rcv = self.serial.readline()
     self.closeSerial()
@@ -53,11 +53,13 @@ class GsmModule():
   def checkResponse(self):
     rcv = self.serial.readline()
     print rcv
+    rcv = self.serial.readline()
+    print rcv
 
 Gsm = GsmModule(port_name, port_baudrate)
 # Gsm.sendCommand("AT")
 # Gsm.sendCommand("AT+CMGF=1")
-Gsm.sendData('AT+CMGS="869596153"', "Msg test", GsmModule.checkReponse)
+Gsm.sendSms("869596153", "Msg test", GsmModule.checkResponse)
 # Gsm.sendCommand("0x1A")
 exit()
 
