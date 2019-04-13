@@ -25,15 +25,29 @@ class GsmModule():
     self.serial.write(cmd + '\r')
     print "Cmd sent", cmd
 
-    rcv = self.serial.read()
-    while(rcv != ''):
-      rcv = self.serial.read()
+    rcv = self.serial.readline()
+    rcv = self.serial.readline()
+    print rcv
 
     self.closeSerial()
+
+  def sendData(self, cmd, data):
+    self.openSerial()
+    self.serial.write(cmd + '\r')
+    print "Cmd sent", cmd
+
+    self.serial.write(data + '\r')
+    rcv = self.serial.readline()
+    print rcv
+    rcv = self.serial.readline()
     print rcv
 
 Gsm = GsmModule(port_name, port_baudrate)
 Gsm.sendCommand("AT")
+Gsm.sendCommand("AT+CMGF=1")
+Gsm.sendData('AT+CMGS="869596153"', "Msg test")
+Gsm.sendCommand("0x1A")
+exit()
 
 # ser = serial.Serial('/dev/ttyAMA0', 115200)
 # ser.close()
